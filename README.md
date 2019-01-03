@@ -1,3 +1,7 @@
 # onboard-taqtile
-Meu primeiro projeto na taqtile!
-Primeira etapa concluida.
+- Change project's name (pick one kk)
+- Environment and tools need to develop
+- Configurations
+- Steps to run and debug
+- Build process
+- Gotcha's
