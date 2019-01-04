@@ -5,8 +5,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Hi! I'm a React app. </h1>
-        <p>This is working</p>
+        <form>
+          <label>
+              Name:
+              <input type="text" name="name" />
+              </label>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     );
   }
