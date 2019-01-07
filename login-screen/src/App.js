@@ -5,20 +5,21 @@ import EmailForm from './forms/emailForm'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 class App extends Component {
 
-
-
-
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      emailValid: false,
+      passwordValid: false,
+      formValid: false,
+      emailError: "",
+      passwordError: ""
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.emailValid && this.state.passwordValid;
   }
 
   handleChange = event => {
@@ -29,11 +30,48 @@ class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.validateField();
   }
+
+  validateField() {
+    let email = this.state.email;
+    let password = this.state.password; 
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+    let emailError = this.state.emailError;
+    let passwordError = this.state.passwordError;
+    emailValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    passwordValid = password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
+    if(emailValid){
+      emailError = "";
+    }
+    else{
+      emailError = "email inválido"
+    }
+
+    if(passwordValid){
+      passwordError = "";
+    }
+    else{
+      passwordError = "password inválido"
+    }
+    this.setState({
+                    emailValid: emailValid,
+                    passwordValid: passwordValid,
+                    emailError: emailError,
+                    passwordError: passwordError
+                  });
+  }
+  
+  //validateForm() {
+  //  this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+  //}
 
   render() {
     return (
       <div className="Login">
+        
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
@@ -43,6 +81,9 @@ class App extends Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
+            
+            <div>{this.state.emailError}</div>
+            
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password</ControlLabel>
@@ -51,11 +92,12 @@ class App extends Component {
               onChange={this.handleChange}
               type="password"
             />
+            <div>{this.state.passwordError}</div>
           </FormGroup>
           <Button
             block
             bsSize="large"
-            disabled={!this.validateForm()}
+            //disabled={!this.validateForm()}
             type="submit"
           >
             Login
