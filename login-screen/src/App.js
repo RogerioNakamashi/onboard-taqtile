@@ -31,7 +31,7 @@ class App extends Component {
     event.preventDefault();
     this.validateField();
     if(this.state.formValid){
-      this.loginRequest();
+      this.loginRequest(this.state.email, this.state.password);
     }
   }
 
@@ -72,8 +72,8 @@ class App extends Component {
   //  this.setState({formValid: this.state.emailValid && this.state.passwordValid});
   //}
 
-  loginRequest() {
-    login().then(response => {
+  loginRequest(email, password) {
+    login(email, password).then(response => {
       console.log(response)
       //this.setState({ projectList: response });
     });

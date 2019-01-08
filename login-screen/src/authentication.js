@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function login() {
+export function login(email, password) {
     return axios('https://tq-template-server-sample.herokuapp.com/authenticate', {
       method: 'POST',
       headers: {
@@ -8,8 +8,8 @@ export function login() {
         'Content-Type': 'application/json',
       },
       data: ({
-        'password': '1111',
-        'email': 'admin@taqtile.com',
+        'password': password,
+        'email': email,
         'rememberMe': false
       })
     })
