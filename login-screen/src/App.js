@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import login from './authentication.js';
 class App extends Component {
 
   constructor(props) {
@@ -29,6 +30,9 @@ class App extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.validateField();
+    if(this.state.formValid){
+      this.loginRequest();
+    }
   }
 
   validateField() {
@@ -39,7 +43,8 @@ class App extends Component {
     let emailError = this.state.emailError;
     let passwordError = this.state.passwordError;
     emailValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-    passwordValid = password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    passwordValid = true;
+    //passwordValid = password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
     if(emailValid){
       emailError = "";
@@ -58,13 +63,21 @@ class App extends Component {
                     emailValid: emailValid,
                     passwordValid: passwordValid,
                     emailError: emailError,
-                    passwordError: passwordError
+                    passwordError: passwordError,
+                    formValid: emailValid && passwordValid
                   });
   }
   
   //validateForm() {
   //  this.setState({formValid: this.state.emailValid && this.state.passwordValid});
   //}
+
+  loginRequest() {
+    login().then(response => {
+      console.log(response)
+      //this.setState({ projectList: response });
+    });
+  }
 
   render() {
     return (
