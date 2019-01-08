@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import NameForm from './forms/nameForm'
-import EmailForm from './forms/emailForm'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 class App extends Component {
 
