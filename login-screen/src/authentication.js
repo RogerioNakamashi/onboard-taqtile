@@ -13,7 +13,7 @@ export function login(email, password) {
         'rememberMe': false
       })
     })
-      .then((response) => { return (response.data) })
+      .then((response) => {return (response.data) })
       .catch((error) => { throw (error.message) })
   }
 

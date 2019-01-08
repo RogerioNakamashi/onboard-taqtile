@@ -32,12 +32,13 @@ class App extends Component {
     this.validateField();
     if(this.state.formValid){
       this.loginRequest(this.state.email, this.state.password);
+      
     }
   }
 
   validateField() {
     let email = this.state.email;
-    let password = this.state.password; 
+    //let password = this.state.password; 
     let emailValid = this.state.emailValid;
     let passwordValid = this.state.passwordValid;
     let emailError = this.state.emailError;
@@ -74,7 +75,10 @@ class App extends Component {
 
   loginRequest(email, password) {
     login(email, password).then(response => {
-      console.log(response)
+      console.log(response);
+      localStorage.setItem("name",response.data.user.name);
+      localStorage.setItem("token",response.data.token);
+      
       //this.setState({ projectList: response });
     });
   }
