@@ -9,7 +9,7 @@ class WelcomeScreen extends Component {
     let welcomeMessage = "Welcome, " + localStorage.getItem("name") + "!";  
     return (      
       <div className="Welcome">
-        <h1>{welcomeMessage}</h1>
+        <h1 >{welcomeMessage}</h1>
       </div>
     );
   }
