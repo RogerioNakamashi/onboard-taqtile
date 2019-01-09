@@ -1,17 +1,17 @@
 @media all and (min-width: 800px) {
-  .Login {
+  .LoginScreen {
     padding: 60px 0;
     align-items: center;
   }
 
-  .Login form {
+  .LoginScreen form {
     margin: 0 auto;
     max-width: 500px;
     align-items: center;
 
   }
 
-  .Login Button {
+  .LoginScreen Button {
     min-width: 480px;
   }
 }
