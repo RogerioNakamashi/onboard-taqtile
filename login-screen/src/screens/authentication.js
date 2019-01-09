@@ -14,7 +14,7 @@ export function login(email, password) {
       })
     })
       .then((response) => {return (response.data) })
-      .catch((error) => { throw (error.message) })
+      .catch((error) => { return (error) })
   }
 
   export default login;
