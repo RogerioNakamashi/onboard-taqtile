@@ -1,27 +1,60 @@
 import React, { Component } from 'react';
-import { Item, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
+import axios from 'axios';
+import UserCard from '../components/user-card';
+import { Redirect } from 'react-router-dom';
+
+
 class UsersListScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        users : [
-            {"name":"Rogério", "role":"Estagiário 1"},
-            {"name":"Diogo", "role":"Estagiário 2"}, 
-            {"name":"João", "role":"Estagiário 3"}
-        ]
+        users : [],
+        authenticated : true
     };
   }
-  render() {    
+
+  componentWillMount(){
+    this.getUsers();  
+    }
+
+  async getUsers() {
+    return axios('https://tq-template-server-sample.herokuapp.com/users?pagination={"page": 0 , "window": 500}', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization : localStorage.getItem("token")
+      },
+    })
+      .then((response) => {
+        this.setState({users : response.data.data, authenticated : true});
+        localStorage.setItem("token", response.headers.authorization);
+        console.log(response.headers.authorization);
+        return (response.data)})
+
+      .catch((error) =>       
+      {
+        console.log(error);
+        this.setState({authenticated : false});
+        return (error)}
+      )
+  }
+
+  render() {
+    let redirect = null;
+    if(!this.state.authenticated){
+      redirect = <Redirect to="/login"/>;
+    }    
     return (    
         <div>
+          {redirect}
         {this.state.users.map(user =>
           <Container>
-            <Item.Content style={{ marginTop: 20, marginBottom: 20 }} >
-              <Item.Header as='h3'>
-                {user.name}
-              </Item.Header>
-              <Item.Description style={{ marginTop: 15 }}><p>{user.role}</p></Item.Description>
-            </Item.Content> 
+            <UserCard 
+              name={user.name} 
+              role={user.role}>
+            </UserCard>
           </Container>
         )}
       </div>
