@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import login from './authentication.js';
+import {login, login2} from './authentication.js';
 import './login-screen.css';
 import { Redirect } from 'react-router-dom';
 class LoginScreen extends Component {
@@ -72,13 +72,9 @@ class LoginScreen extends Component {
                   });
   }
   
-  //validateForm() {
-  //  this.setState({formValid: this.state.emailValid && this.state.passwordValid});
-  //}
-
   loginRequest(email, password) {
     this.setState({isLoading : true})
-    login(email, password)
+    login2(email, password)
       .then(response => {
         console.log(response);
         localStorage.setItem("name",response.data.user.name);
@@ -86,16 +82,19 @@ class LoginScreen extends Component {
         this.setState({authenticated : true, isLoading : false});  
       })
       .catch(error => {
-        console.log(error);  
+        console.log(error);
         this.setState({authenticated : false, isLoading : false});  
       });
   }
 
+  
   render() {
     
     let redirect = null;
     if(this.state.authenticated){
-      redirect = <Redirect to="/welcome"/>;
+      localStorage.setItem("email",this.state.email);
+      localStorage.setItem("password",this.state.password);
+      redirect = <Redirect to="/home"/>;
     }     
     return (
       
@@ -107,7 +106,6 @@ class LoginScreen extends Component {
             <ControlLabel>Email</ControlLabel>
             <FormControl
               autoFocus
-              type="email"
               value={this.state.email}
               onChange={this.handleChange}
             />            
@@ -120,7 +118,7 @@ class LoginScreen extends Component {
               onChange={this.handleChange}
               type="password"
             />
-            <div>{this.state.passwordError}</div>
+            <div >{this.state.passwordError}</div>
           </FormGroup>
           <Button
             block
@@ -129,7 +127,7 @@ class LoginScreen extends Component {
             disabled={this.state.isLoading}
             type="submit"
           >
-          {this.state.isLoading ? "loading..." : "Login"}
+          {this.state.isLoading ? "Loading..." : "Login"}
           </Button>
         </form>
       </div>
