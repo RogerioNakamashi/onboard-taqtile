@@ -13,7 +13,10 @@ export async function login(email, password) {
         'rememberMe': false
       })
     })
-      .then((response) => {return (response.data)})
+      .then((response) => {
+        localStorage.setItem("name",response.data.data.user.name);
+        localStorage.setItem("token",response.data.data.token);
+        return (response.data)})
       .catch((error) => { return (error)})
   }
 

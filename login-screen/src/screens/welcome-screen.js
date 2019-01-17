@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react'
 
 

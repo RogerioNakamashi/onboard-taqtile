@@ -31,7 +31,6 @@ class UsersListScreen extends Component {
       .then((response) => {
         this.setState({users : response.data.data, authenticated : true});
         localStorage.setItem("token", response.headers.authorization);
-        console.log(response.headers.authorization);
         return (response.data)})
 
       .catch((error) =>       
@@ -53,8 +52,7 @@ class UsersListScreen extends Component {
       redirect = <Redirect to="/login"/>;
     }    
     return (    
-        <div>
-  
+        <div>  
           {redirect}
         {this.state.users.map(user =>
             <div>
