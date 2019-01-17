@@ -1,0 +1,24 @@
+@media all and (min-width: 800px) {
+    .Login {
+      padding: 150px 0;
+      align-items: center;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 500px;
+      align-items: center;
+  
+    }
+  
+    .Login Button {
+      min-width: 480px;
+      margin-top: 50px;
+    }
+
+    .Login h1 {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+  }

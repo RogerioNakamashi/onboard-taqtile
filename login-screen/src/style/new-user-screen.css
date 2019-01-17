@@ -1,0 +1,24 @@
+@media all and (min-width: 800px) {
+    .NewUser {
+      padding: 150px 0;
+      align-items: right;
+    }
+  
+    .NewUser form {
+      margin:  auto;
+      max-width: 500px;
+      align-items: center;
+  
+    }
+  
+    .NewUser Button {
+      min-width: 480px;
+      margin-top: 50px;
+    }
+
+    .NewUser h1 {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+  }
