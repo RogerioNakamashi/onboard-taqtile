@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {login, login2} from './authentication.js';
+import {login, login2} from './authentication'
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import '../style/new-user-screen.css';
-class NewUserScreen extends Component {
+class EditUserForm extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name : "",
-      email: "",
-      password: "",
-      role : "admin",
+      name : localStorage.getItem("currentName"),
+      email: localStorage.getItem("currentEmail"),
+      role : localStorage.getItem("currentRole"),
+      editId : localStorage.getItem("currentId"),
       emailValid: false,
-      passwordValid: false,
       nameValid : false,
       formValid: false,
       authenticated: false,
       isLoading: false,
-      emailError: "",
-      passwordError: "",
-      userCreated : false
+      returnToDetail : false
     };
   }
 
@@ -33,48 +29,43 @@ class NewUserScreen extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
-    this.validateField();
   }
 
   handleSubmit = event => {
-
     this.setState({isLoading : true});
     event.preventDefault();
-    console.log(this.state);
+    this.validateField();
+    localStorage.setItem("searchId",this.state.editId)
     if(this.state.formValid){
-      this.newUserRequest(this.state.name, this.state.email, this.state.password, this.state.role);
+      this.editUserRequest(this.state.name, this.state.email, this.state.role, this.state.editId);
     }else{
       this.setState({isLoading : false})
       console.log("form invalido");
     }
   }
 
+  cancelEdit(){
+    localStorage.setItem("searchId", this.state.editId);
+    this.setState({returnToDetail : true});
+  }
+
   validateField() {
+    // let emailValid = this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    // let nameValid = this.state.name.match(/^[a-zA-Z]+$/);
+    // let passwordValid = this.state.password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) && (this.state.password == this.state.confirmPassword);
     let emailValid = true;
     let nameValid = true;
-    let passwordValid = true;
-
-    if(this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) == null){
-      emailValid = false;
-    }
-    if(this.state.name.match(/^[a-zA-Z]+$/) == null){
-      nameValid = false;
-    };
-    if(this.state.password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/) == null){
-      passwordValid = false;
-    };
-     
     this.setState({
                     nameValid: nameValid,
                     emailValid: emailValid,
-                    passwordValid: passwordValid,
-                    formValid: (emailValid && passwordValid && nameValid)
+                    formValid: emailValid && nameValid
                   });
   }
   
-  async newUserRequest(name, email, password, role) {
-    return axios('https://tq-template-server-sample.herokuapp.com/users', {
-      method: 'POST',
+  async editUserRequest(name, email, role, id) {
+    console.log("URL de request: "+"https://tq-template-server-sample.herokuapp.com/users/" + id)
+    return axios('https://tq-template-server-sample.herokuapp.com/users/' + id, {
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -83,16 +74,15 @@ class NewUserScreen extends Component {
       data: ({
         'name': name,
         'email': email,
-        'password': password,
         'role': role,
       })
     })
       .then((response) => {
         console.log (response);
         localStorage.setItem("token", response.headers.authorization);
-        this.setState({isLoading : false, userCreated : true})})
+        this.setState({isLoading : false, returnToDetail : true})})
       .catch((error) => { 
-        console.log("erro na request");
+        console.log("erro na request do form");
         console.log(error);
         this.setState({isLoading : false})})
   }
@@ -100,14 +90,14 @@ class NewUserScreen extends Component {
   render() {
     
     let redirect = null;
-    if(this.state.userCreated){
-      redirect = <Redirect to="/users"/>;
+    if(this.state.returnToDetail){
+      redirect = <Redirect to={"/user-details/" + this.state.editId}/>;
     }     
     return (
       
       <div className="NewUser">
         {redirect}  
-        <h1>Create new user</h1>
+        <h1>Edit user</h1>
         <form onSubmit={this.handleSubmit}>
 
           <FormGroup controlId="name" bsSize="large">
@@ -139,15 +129,6 @@ class NewUserScreen extends Component {
             </FormControl>
           </FormGroup>
 
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-
           <Button
             block
             bsSize="large"
@@ -155,7 +136,16 @@ class NewUserScreen extends Component {
             disabled={this.state.isLoading}
             type="submit"
           >
-          {this.state.isLoading ? "Loading..." : "Create"}
+          {this.state.isLoading ? "Updating..." : "Update"}
+          </Button>
+          
+          <Button
+            block
+            bsSize="large"
+            bsStyle="primary"
+            onClick={() => {this.setState({returnToDetail : true})}}
+          >
+          Cancel
           </Button>
 
         </form>
@@ -164,4 +154,4 @@ class NewUserScreen extends Component {
   }
 }
 
-export default NewUserScreen;
+export default EditUserForm;

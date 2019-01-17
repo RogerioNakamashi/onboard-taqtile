@@ -24,13 +24,6 @@ class WelcomeScreen extends Component {
           />
         </Link>
 
-        <Link to='/user-details'>
-          <Menu.Item
-            name='Search user by id'
-            active={true}
-          />
-        </Link>
-
         <Link to='/new-user'>
           <Menu.Item
             name='Create new user'

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
 
 class UserCard extends React.Component {
     constructor(props){
@@ -12,16 +11,13 @@ class UserCard extends React.Component {
     }
   render() {
     return(
-        <Card>
-        <Image src={this.props.image} />
-        <Card.Content>
-          <Card.Header>{this.props.name}</Card.Header>
-          <Card.Meta>
-            <span className='date'>{this.props.role}</span>
-          </Card.Meta>
-          <Card.Description>{this.props.email}</Card.Description>
-        </Card.Content>
-      </Card>
+
+      <div>
+        <h3>{this.props.name}</h3>
+        <p>{this.props.role}</p>
+        <p>{this.props.email}</p>
+      </div>
+
     )
   }
 }
