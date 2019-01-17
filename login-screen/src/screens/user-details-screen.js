@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import axios from 'axios';
 import UserCard from '../components/user-card';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import EditUserForm from './edit-user-form';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
  
 
@@ -16,15 +17,17 @@ class UserDetailsScreen extends Component {
         name : "",
         email : "",
         role : "",
-        id : "",
+        id : localStorage.getItem("searchId"),
         authenticated : true,
         idEmpty : true,
-        hasData : true
+        hasData : true,
+        edit : false
     };
   }
 
   componentWillMount(){
-    this.getUserDetails(this.state.id);  
+    this.getUserDetails(this.state.id); 
+    console.log(window.location.href) 
     }
 
   async getUserDetails(id) {
@@ -38,7 +41,13 @@ class UserDetailsScreen extends Component {
     })
       .then((response) => {
         console.log(response);
-        this.setState({name : response.data.data.name, email : response.data.data.email, role : response.data.data.role, authenticated : true});
+        
+        this.setState({
+          name : response.data.data.name, 
+          email : response.data.data.email, 
+          role : response.data.data.role, 
+          authenticated : true});
+
         localStorage.setItem("token", response.headers.authorization);
         return (response.data)})
 
@@ -58,7 +67,11 @@ class UserDetailsScreen extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.getUserDetails(this.state.id);
+    this.setState({edit : true});
+    localStorage.setItem("currentName", this.state.name);
+    localStorage.setItem("currentEmail", this.state.email);
+    localStorage.setItem("currentRole", this.state.role);
+    localStorage.setItem("currentId", this.state.id);
 
   }
 
@@ -70,7 +83,7 @@ class UserDetailsScreen extends Component {
             name={this.state.name} 
             email={this.state.email} 
             role={this.state.role}>
-                </UserCard>
+            </UserCard>
             </div>
         );
     }else{
@@ -79,25 +92,19 @@ class UserDetailsScreen extends Component {
   }
 
   render() {
-    
+    let redirect = null;
+    if(this.state.edit){
+      redirect = <Redirect to='/edit'/>
+    }
     return (    
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup  controlId="id">
-              <ControlLabel>Search user by id</ControlLabel>
-              <FormControl
-                value={this.state.id}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <Button
-              onClick={this.handleSubmit}
-              >Search
-            </Button> 
-            {this.displayCard(this.state.hasData)}
-
-          </form>
-      </div>
+          {redirect}
+          {this.displayCard(true)}
+          <Button
+            onClick={this.handleSubmit}
+            >{this.state.showForm ? "Cancel" : "Edit"}
+          </Button> 
+        </div>
     );
   }
 }

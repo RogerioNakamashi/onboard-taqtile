@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import axios from 'axios';
 import UserCard from '../components/user-card';
+import {Link} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 
 
@@ -41,6 +42,11 @@ class UsersListScreen extends Component {
       )
   }
 
+  saveId(id){
+    console.log("id salvo: " + id)
+    localStorage.setItem("searchId", id);
+  }
+
   render() {
     let redirect = null;
     if(!this.state.authenticated){
@@ -48,14 +54,16 @@ class UsersListScreen extends Component {
     }    
     return (    
         <div>
+  
           {redirect}
         {this.state.users.map(user =>
-          <Container>
-            <UserCard 
-              name={user.name} 
-              role={user.role}>
-            </UserCard>
-          </Container>
+            <div>
+              <UserCard 
+                name={user.name} 
+                role={user.role}>
+              </UserCard>
+              <Link onClick={() => this.saveId(user.id)} to={'/user-details/' + user.id}>Details</Link>
+            </div>
         )}
       </div>
     );

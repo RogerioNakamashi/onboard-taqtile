@@ -28,17 +28,27 @@ class LoginScreen extends Component {
     this.setState({
       [event.target.id]: event.target.value
     });
+    this.validateField();
   }
 
   handleSubmit = event => {
+    console.log(this.state);
     event.preventDefault();
-    this.validateField();
+    this.verifyErrors();
     if(this.state.formValid){
-      this.loginRequest(this.state.email, this.state.password);
-      
+      this.loginRequest(this.state.email, this.state.password);      
     }
   }
 
+  verifyErrors(){
+     if(!this.state.emailValid){
+      this.setState({emailError : "invalid email"});
+    }
+
+    if(!this.state.passwordValid){
+      this.setState({passworError : "invalid password"});
+    }
+  }
   validateField() {
     let email = this.state.email;
     //let password = this.state.password; 
@@ -46,30 +56,26 @@ class LoginScreen extends Component {
     let passwordValid = this.state.passwordValid;
     let emailError = this.state.emailError;
     let passwordError = this.state.passwordError;
-    emailValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    let formValid = true;
+
+    if(email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) == null){
+      emailValid = false;
+      console.log("email invalido")
+    }else{
+      emailValid = true;
+      console.log("email valido")
+    };
     passwordValid = true;
-    //passwordValid = password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
-    if(emailValid){
-      emailError = "";
-    }
-    else{
-      emailError = "email inválido"
-    }
-
-    if(passwordValid){
-      passwordError = "";
-    }
-    else{
-      passwordError = "password inválido"
-    }
+   
     this.setState({
                     emailValid: emailValid,
                     passwordValid: passwordValid,
                     emailError: emailError,
                     passwordError: passwordError,
-                    formValid: emailValid && passwordValid
+                    formValid: emailValid //&& passworValid
                   });
+
   }
   
   loginRequest(email, password) {
@@ -86,7 +92,6 @@ class LoginScreen extends Component {
         this.setState({authenticated : false, isLoading : false});  
       });
   }
-
   
   render() {
     
@@ -100,7 +105,7 @@ class LoginScreen extends Component {
       
       <div className="Login">
         {redirect}  
-  
+        <h1>Sign in</h1>
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>

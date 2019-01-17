@@ -1,24 +1,24 @@
 @media all and (min-width: 800px) {
-    .Login {
+    .NewUser {
       padding: 150px 0;
-      align-items: center;
+      align-items: right;
     }
   
-    .Login form {
-      margin: 0 auto;
+    .NewUser form {
+      margin:  auto;
       max-width: 500px;
       align-items: center;
   
     }
   
-    .Login Button {
+    .NewUser Button {
       min-width: 480px;
       margin-top: 50px;
     }
 
-    .Login h1 {
-      margin-bottom: 40px;
-      text-align: center;
+    .NewUser h1 {
+        margin-bottom: 40px;
+        text-align: center;
     }
 
   }
