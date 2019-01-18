@@ -6,8 +6,7 @@ import UsersListScreen from './screens/users-list-screen';
 import EditUserForm from './screens/edit-user-form';
 import UserDetailsScreen from './screens/user-details-screen';
 import NewUserScreen from './screens/new-user-screen';
-import HeaderMaster from './components/header-master';
-
+import LoginControl from './domain/loginControl.js'
 class App extends Component {
 
   render() {
@@ -15,7 +14,7 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <Switch>
-            <Route path='/login' exact component={LoginScreen} />
+            <Route path='/login' exact component={LoginControl} />
             <Route path='/home' exact component={WelcomeScreen} />
             <Route path='/users' exact component={UsersListScreen} />
             <Route path='/user-details' component={UserDetailsScreen} />

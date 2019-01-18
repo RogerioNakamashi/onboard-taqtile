@@ -19,13 +19,12 @@ class LoginScreen extends Component {
     };
   }
  
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       [event.target.id]: event.target.value
     });
     this.validateForm();
   }
-
   handleSubmit = event => {
     event.preventDefault();
     if(this.state.formValid){
