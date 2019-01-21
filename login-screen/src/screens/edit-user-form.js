@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {login, login2} from './authentication'
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 class EditUserForm extends Component {
