@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import UserCard from '../components/user-card';
-import { Redirect, Link } from 'react-router-dom';
-import { Button} from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import UserDetails from '../presentation/userDetails' 
- 
+import {getUserDetails} from '../data/requests' 
+import { Save, Get } from '../data/storage';
 
 class UserDetailsControl extends Component {
-
-  baseUrl = "https://tq-template-server-sample.herokuapp.com/users/";
-
   constructor(props) {
     super(props);
     this.state = {
         name : "",
         email : "",
         role : "",
-        id : localStorage.getItem("id"),
+        id : Get.id(),
         authenticated : true,
         idEmpty : true,
         edit : false
@@ -24,38 +19,11 @@ class UserDetailsControl extends Component {
   }
 
   componentWillMount(){
-    this.getUserDetails(this.state.id); 
-    console.log(window.location.href) 
+    getUserDetails(this.state.id)
+        .then((response) => {
+            this.setState({name : response.data.data.name, email : response.data.data.email , role : response.data.data.role, authenticated : true })
+        }); 
     }
-
-  async getUserDetails(id) {
-    return axios(this.baseUrl + id, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization : localStorage.getItem("token")
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        
-        this.setState({
-          name : response.data.data.name, 
-          email : response.data.data.email, 
-          role : response.data.data.role, 
-          authenticated : true});
-
-        localStorage.setItem("token", response.headers.authorization);
-        return (response.data)})
-
-      .catch((error) =>       
-      {
-        console.log(error);
-        this.setState({authenticated : false});
-        return (error)}
-      )
-  }
 
   handleChange = event => {
     this.setState({
@@ -66,10 +34,10 @@ class UserDetailsControl extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({edit : true});
-    localStorage.setItem("currentName", this.state.name);
-    localStorage.setItem("currentEmail", this.state.email);
-    localStorage.setItem("currentRole", this.state.role);
-    localStorage.setItem("currentId", this.state.id);
+    Save.name(this.state.name);
+    Save.email(this.state.email);
+    Save.role(this.state.role);
+    Save.id(this.state.id);
 
   }
 
