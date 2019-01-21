@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {login} from '../screens/authentication.js';
+import {login} from '../data/requests.js';
 import { Redirect } from 'react-router-dom';
 import Validation from '../validation.js';
 import Login from '../presentation/login.js';
-class LoginControl extends Component {
 
+class LoginControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,42 +40,33 @@ class LoginControl extends Component {
     }
   
   loginRequest = (email, password) => {
-    this.setState({isLoading : true})
+    this.setState({isLoading : true});
     login(email, password)
-      .then(
-       (response) => {
-        this.setState({isLoading : false});
-        if(response.data != null){
-          this.setState({authenticated : true});
-        }
+      .then(() => {
+        this.setState({isLoading : false, authenticated : true});        
        })
-      .catch(
-        () => {
+      .catch(() => {
           console.log("erro na autenticação")
-          this.setState({authenticated : false, isLoading : false})}
+          this.setState({isLoading : false, authenticated : false})}
       );
   }
 
-  navigateHome = () => {
-    let redirect = null;
-    if(this.state.authenticated){
-      localStorage.setItem("email",this.state.email);
-      localStorage.setItem("password",this.state.password);
-      redirect = <Redirect to="/home"/>;
+  navigateHome = (authenticated) => {
+    if(authenticated){
+      return <Redirect to="/home"/>;
     }
-    return redirect; 
+    else{
+        return <div></div>
+    }
   }
  
   render() {
     return ( 
             <div>
-                {this.navigateHome()}
+                {this.navigateHome(this.state.authenticated)}
                 <Login
                     handleChange = {this.handleChange}
                     handleSubmit = {this.handleSubmit}
-                    validateForm = {this.validateForm}
-                    loginRequest = {this.loginRequest}
-                    navigateHome = {this.navigateHome}
                     isLoading = {this.state.isLoading}>
                 </Login>
             </div>

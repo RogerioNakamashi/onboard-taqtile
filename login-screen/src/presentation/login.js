@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import './style/login.css'
 class Login extends Component {
 
   constructor(props) {
@@ -15,14 +16,12 @@ class Login extends Component {
             <ControlLabel>Email</ControlLabel>
             <FormControl
               autoFocus
-              value={this.props.email}
               onChange={this.props.handleChange}
             />            
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password</ControlLabel>
             <FormControl
-              value={this.props.password}
               onChange={this.props.handleChange}
               type="password"
             />

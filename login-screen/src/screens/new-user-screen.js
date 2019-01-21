@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {login, login2} from './authentication.js';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import '../style/new-user-screen.css';

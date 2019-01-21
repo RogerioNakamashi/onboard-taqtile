@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
 import axios from 'axios';
 import UserCard from '../components/user-card';
 import { Redirect, Link } from 'react-router-dom';
-import EditUserForm from './edit-user-form';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
+import UserDetails from '../presentation/userDetails' 
  
 
-class UserDetailsScreen extends Component {
+class UserDetailsControl extends Component {
 
   baseUrl = "https://tq-template-server-sample.herokuapp.com/users/";
 
@@ -20,7 +19,6 @@ class UserDetailsScreen extends Component {
         id : localStorage.getItem("id"),
         authenticated : true,
         idEmpty : true,
-        hasData : true,
         edit : false
     };
   }
@@ -75,37 +73,22 @@ class UserDetailsScreen extends Component {
 
   }
 
-  displayCard(hasData){
-    if(hasData){
-        return(
-            <div>
-            <UserCard
-            name={this.state.name} 
-            email={this.state.email} 
-            role={this.state.role}>
-            </UserCard>
-            </div>
-        );
-    }else{
-        return <div/>
-    }
+  redirect(edit){
+      if(edit) return <Redirect to='/edit'/>;
+      else return <div/>
   }
-
   render() {
-    let redirect = null;
-    if(this.state.edit){
-      redirect = <Redirect to='/edit'/>
-    }
     return (    
         <div>
-          {redirect}
-          {this.displayCard(true)}
-          <Button
-            onClick={this.handleSubmit}
-            >{this.state.showForm ? "Cancel" : "Edit"}
-          </Button> 
+          {this.redirect(this.state.edit)}
+          <UserDetails
+            name={this.state.name}
+            email={this.state.email}
+            role={this.state.role}
+            handleSubmit={this.handleSubmit}>
+          </UserDetails>
         </div>
     );
   }
 }
-export default UserDetailsScreen;
+export default UserDetailsControl;
