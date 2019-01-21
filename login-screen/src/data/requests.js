@@ -33,30 +33,13 @@ export async function login(email, password) {
   }
 
   export async function getUserDetails(id) {
-    return axios(this.baseUrl + id, {
+    const response = axios("https://tq-template-server-sample.herokuapp.com/users/" + id, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization : localStorage.getItem("token")
+        Authorization : Get.token()
       },
     })
-      .then((response) => {
-        console.log(response);
-        
-        this.setState({
-          name : response.data.data.name, 
-          email : response.data.data.email, 
-          role : response.data.data.role, 
-          authenticated : true});
-
-        localStorage.setItem("token", response.headers.authorization);
-        return (response.data)})
-
-      .catch((error) =>       
-      {
-        console.log(error);
-        this.setState({authenticated : false});
-        return (error)}
-      )
+    return response;
   }
