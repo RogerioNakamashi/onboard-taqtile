@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Get, Save} from '../data/storage.js'
+import {Get} from '../data/storage.js'
 
 export async function login(email, password) {
     return axios('https://tq-template-server-sample.herokuapp.com/authenticate', {

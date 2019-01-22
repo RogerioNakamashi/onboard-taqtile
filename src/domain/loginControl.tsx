@@ -64,25 +64,20 @@ class LoginControl extends Component<{}, State > {
   }
 
   navigateHome = (authenticated: boolean) => {
-    if(authenticated){
-      return <Redirect to="/home"/>;
-    }
-    else{
-        return <div></div>
-    }
+    if(authenticated) return <Redirect to="/home"/>
+    else return <div/>
   }
  
   render() {
     return ( 
-            <div>
-                {this.navigateHome(this.state.authenticated)}
-                <Login
-                  
-                    handleChange = {this.handleChange}
-                    handleSubmit = {this.handleSubmit}
-                    isLoading = {this.state.isLoading}>
-                </Login>
-            </div>
+      <div>
+        {this.navigateHome(this.state.authenticated)}
+        <Login                  
+            handleChange = {this.handleChange}
+            handleSubmit = {this.handleSubmit}
+            isLoading = {this.state.isLoading}>
+        </Login>
+      </div>
     );
   }
 }

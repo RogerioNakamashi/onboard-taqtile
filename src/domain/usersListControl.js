@@ -21,8 +21,6 @@ class UsersListControl extends Component {
   }
  
   handleClick = (user) => {    
-    console.log("dadada")
-    console.log(user)
     Save.id(user.id)
   }
 

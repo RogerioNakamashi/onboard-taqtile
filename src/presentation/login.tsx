@@ -5,9 +5,9 @@ import './style/login.css'
 interface Props{
     handleSubmit : any,
     handleChange : any,
-    isLoading : boolean,
+    isLoading : boolean
 }
-class Login extends Component<Props> {
+class Login extends Component<Props>{
   constructor(Props : any) {
     super(Props);
   }
@@ -45,6 +45,5 @@ class Login extends Component<Props> {
     );
   }
 }
-
 
 export default Login;
