@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import EditUserForm from './screens/edit-user-form';
 import NewUserScreen from './screens/new-user-screen';
-import LoginControl from './domain/loginControl.js'
+import LoginControl from './domain/loginControl.tsx'
 import UsersListControl from './domain/usersListControl.js'
 import WelcomeControl from './domain/welcomeControl.js'
 import UserDetailsControl from './domain/userDetailsControl'

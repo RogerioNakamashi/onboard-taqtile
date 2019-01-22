@@ -8,10 +8,10 @@ class EditUserControl extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name : localStorage.getItem("currentName"),
-      email: localStorage.getItem("currentEmail"),
-      role : localStorage.getItem("currentRole"),
-      editId : localStorage.getItem("currentId"),
+      name : localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+      role : localStorage.getItem("role"),
+      editId : localStorage.getItem("id"),
       emailValid: false,
       nameValid : false,
       formValid: false,
