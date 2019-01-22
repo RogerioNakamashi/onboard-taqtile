@@ -38,7 +38,6 @@ class UserDetailsControl extends Component {
     Save.email(this.state.email);
     Save.role(this.state.role);
     Save.id(this.state.id);
-
   }
 
   redirect(edit){

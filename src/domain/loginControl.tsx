@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import {login} from '../data/requests.js';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Validation from '../validation.js';
-import Login from '../presentation/login.js';
+import Login from '../presentation/login';
+import {Get, Save} from '../data/storage.js'
 
-class LoginControl extends Component {
-  constructor(props) {
+interface State {
+  email: string,
+  password: string,
+  emailValid: boolean,
+  passwordValid: boolean,
+  formValid: boolean,
+  authenticated: boolean,
+  isLoading: boolean,
+  [key: string]: any
+}
+
+class LoginControl extends Component<{}, State > {
+  constructor(props : any) {
     super(props);
     this.state = {
       email: "",
@@ -18,14 +30,12 @@ class LoginControl extends Component {
     };
   }
  
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+  handleChange = (event : any)  => {
+    this.setState({[event.target.id] : event.target.value});
     this.validateForm();
   }   
 
-  handleSubmit = event => {
+  handleSubmit = (event : any) => {
     event.preventDefault();
     if(this.state.formValid){
       this.loginRequest(this.state.email, this.state.password);      
@@ -39,10 +49,12 @@ class LoginControl extends Component {
       formValid: this.state.emailValid});
     }
   
-  loginRequest = (email, password) => {
+  loginRequest = (email : string, password : string) => {
     this.setState({isLoading : true});
     login(email, password)
-      .then(() => {
+      .then((response) => {
+        Save.name(response.data.data.user.name);
+        Save.token(response.data.data.token);
         this.setState({isLoading : false, authenticated : true});        
        })
       .catch(() => {
@@ -51,7 +63,7 @@ class LoginControl extends Component {
       );
   }
 
-  navigateHome = (authenticated) => {
+  navigateHome = (authenticated: boolean) => {
     if(authenticated){
       return <Redirect to="/home"/>;
     }
@@ -65,6 +77,7 @@ class LoginControl extends Component {
             <div>
                 {this.navigateHome(this.state.authenticated)}
                 <Login
+                  
                     handleChange = {this.handleChange}
                     handleSubmit = {this.handleSubmit}
                     isLoading = {this.state.isLoading}>
@@ -73,6 +86,5 @@ class LoginControl extends Component {
     );
   }
 }
-
 
 export default LoginControl;

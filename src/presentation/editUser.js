@@ -9,7 +9,6 @@ class EditUser extends Component {
     return (
       
       <div className="NewUser">
-        {redirect}  
         <h1>Edit user</h1>
         <form onSubmit={this.props.handleSubmit}>
 

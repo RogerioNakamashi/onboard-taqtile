@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './style/login.css'
-class Login extends Component {
 
-  constructor(props) {
-    super(props);
+interface Props{
+    handleSubmit : any,
+    handleChange : any,
+    isLoading : boolean,
+}
+class Login extends Component<Props> {
+  constructor(Props : any) {
+    super(Props);
   }
    
   render() {    

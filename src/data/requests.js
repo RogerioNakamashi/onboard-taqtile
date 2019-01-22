@@ -14,10 +14,6 @@ export async function login(email, password) {
         'rememberMe': false
       })
     })
-      .then((response) => {
-        Save.name(response.data.data.user.name);
-        Save.token(response.data.data.token);
-        return (response.data)})
   }
 
   export async function getUsers() {
