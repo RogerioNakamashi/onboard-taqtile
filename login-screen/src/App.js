@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import UsersListScreen from './screens/users-list-screen';
 import EditUserForm from './screens/edit-user-form';
-import UserDetailsScreen from './screens/user-details-screen';
 import NewUserScreen from './screens/new-user-screen';
 import LoginControl from './domain/loginControl.js'
 import UsersListControl from './domain/usersListControl.js'
