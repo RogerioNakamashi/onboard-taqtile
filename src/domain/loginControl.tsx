@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {login} from '../data/requests.js';
 import {Redirect} from 'react-router-dom';
 import Validation from '../validation.js';
-import Login from '../presentation/login.js';
+import Login from '../presentation/login';
 import {Get, Save} from '../data/storage.js'
 
 interface State {
