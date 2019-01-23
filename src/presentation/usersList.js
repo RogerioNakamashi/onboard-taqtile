@@ -10,7 +10,7 @@ class UsersList extends Component {
     return (    
         <div> 
         {this.props.users.map(user =>
-            <div>
+            <div key={user.id}>
               <UserCard 
                 name={user.name} 
                 role={user.role}>

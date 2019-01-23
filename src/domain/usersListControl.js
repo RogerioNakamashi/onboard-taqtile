@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import UsersList from '../presentation/usersList';
-import {Get, Save} from '../data/storage'
+import {Save} from '../data/storage'
 import {getUsers} from '../data/requests'
 
 class UsersListControl extends Component {
@@ -31,6 +31,7 @@ class UsersListControl extends Component {
           return <div/>
       }
   }
+
   render() {    
     return (    
         <div>  
