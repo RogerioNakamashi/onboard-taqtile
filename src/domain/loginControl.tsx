@@ -3,9 +3,9 @@ import {login} from '../data/requests.js';
 import {Redirect} from 'react-router-dom';
 import Validation from '../validation.js';
 import Login from '../presentation/login';
-import {Get, Save} from '../data/storage.js'
+import {Save} from '../data/storage.js'
 
-interface State {
+type State  = {
   email: string,
   password: string,
   emailValid: boolean,
@@ -42,6 +42,10 @@ class LoginControl extends Component<{}, State > {
     };
   }
 
+  componentDidMount(){
+    console.log(this)
+  }
+
   validateForm = () => { 
     this.setState({
       emailValid: Validation.email(this.state.email),
@@ -58,14 +62,13 @@ class LoginControl extends Component<{}, State > {
         this.setState({isLoading : false, authenticated : true});        
        })
       .catch(() => {
-          console.log("erro na autenticação")
+          console.log("erro na autenticacao")
           this.setState({isLoading : false, authenticated : false})}
       );
   }
 
   navigateHome = (authenticated: boolean) => {
-    if(authenticated) return <Redirect to="/home"/>
-    else return <div/>
+    return (authenticated ? <Redirect to="/home"/> : <div/>)
   }
  
   render() {

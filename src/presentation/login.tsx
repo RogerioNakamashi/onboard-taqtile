@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import Tittle from '../components/tittle'
 import './style/login.css'
 
 interface Props{
@@ -15,7 +16,7 @@ class Login extends Component<Props>{
   render() {    
     return (      
       <div className="Login"> 
-        <h1>Sign in</h1>
+        <Tittle>Sign in</Tittle>
         <form onSubmit={this.props.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
